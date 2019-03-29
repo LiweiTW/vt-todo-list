@@ -8,8 +8,7 @@ use Illuminate\Support\Str;
 
 class TokenService
 {
-    public function __construct()
-    {
+    public function __construct() {
         //
     }
 
@@ -38,8 +37,10 @@ class TokenService
     }
 
     public function verifyToken ($token) {
+//        $token = ($token ? $token : "");
         $result = array(
             "isValid" => false,
+            "userId" => "",
             "expiredAt" => "",
         );
         $token = Token::where('token', $token)
@@ -49,6 +50,7 @@ class TokenService
 
         if ($expiredAt != null) {
             $result["isValid"] = true;
+            $result["userId"] = $token->user_id;
             $result["expiredAt"] = Carbon::createFromTimestamp($expiredAt)->toIso8601String();
         }
 

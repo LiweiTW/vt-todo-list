@@ -17,5 +17,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('token/{token}' , 'TokenController@verifyToken');
-Route::post('token/' , 'TokenController@getToken');
+//Token API
+
+Route::get("token/{token}", "TokenController@verifyToken");
+Route::post("token/", "TokenController@getToken");
+
+//Todo API
+Route::middleware('token')->get('todo/', "TodoController@getTodos");
+Route::middleware('token')->get('todo/{id}', "TodoController@getTodo");
+Route::middleware('token')->post('todo/{id}', "TodoController@updateTodo");
+Route::middleware('token')->post('todo/', "TodoController@createTodo");
+
