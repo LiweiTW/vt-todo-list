@@ -11,14 +11,13 @@ class TokenController extends Controller
 
     private $tokenService;
 
-    public function __construct(TokenService $tokenService)
-    {
+    public function __construct(TokenService $tokenService) {
         $this->tokenService = $tokenService;
     }
 
     public function getToken (Request $request) {
-        $email = $request->get("email");
-        $password = $request->get("password");
+        $email = $request->get("email", "");
+        $password = $request->get("password", "");
         $userdata = array(
             "email"     => $email,
             "password"  => $password,
@@ -37,7 +36,7 @@ class TokenController extends Controller
     }
 
     public function verifyToken ($token) {
-        $result = $this->tokenService->verifyToken($token);
+        $result = $this->tokenService->verifyToken($token, "");
         if ($result['isValid']) {
             return response()->json($result);
         } else {
