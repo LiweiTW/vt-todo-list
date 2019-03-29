@@ -3,6 +3,7 @@ namespace App\Services;
 
 
 use App\Model\Todo;
+use Illuminate\Support\Facades\DB;
 
 class TodoService
 {
@@ -56,5 +57,26 @@ class TodoService
     public function get ($userId, $todoId) {
         $todo = Todo::where("user_id", $userId)->where("id", $todoId)->first();
         return $todo;
+    }
+
+    public function deleteAll ($userId) {
+        $deleteStatus = DB::table('todos')->where('user_id', $userId)->delete();
+        return $deleteStatus;
+    }
+
+    public function delete ($userId, $todoId) {
+        $result = array(
+            "hasSuccess" => false,
+            "data" => null,
+        );
+
+        $todo = Todo::where("user_id", $userId)->where("id", $todoId)->first();
+        if ($todo === null) {
+            return $result;
+        }
+
+        $result['hasSuccess'] = $todo->delete();
+        $result['data'] = $todo;
+        return $result;
     }
 }

@@ -27,4 +27,6 @@ Route::middleware('token')->get('todo/', "TodoController@getTodos");
 Route::middleware('token')->get('todo/{id}', "TodoController@getTodo");
 Route::middleware('token')->post('todo/{id}', "TodoController@updateTodo");
 Route::middleware('token')->post('todo/', "TodoController@createTodo");
+Route::middleware('token')->delete('todo/', "TodoController@deleteTodos");
+Route::middleware('token')->delete('todo/{id}', "TodoController@deleteTodo");
 

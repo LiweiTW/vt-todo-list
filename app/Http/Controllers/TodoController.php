@@ -52,4 +52,20 @@ class TodoController extends Controller
         $result = $this->todoService->update($userId, $todoId, $title, $content, $attachment, $doneAt);
         return response()->json($result);
     }
+
+    public function deleteTodos (Request $request) {
+        $userId = $request->input("userId", "");
+
+        $result = $this->todoService->deleteAll($userId);
+        return response()->json(array(
+            "deleted" => $result,
+        ));
+    }
+
+    public function deleteTodo (Request $request, $todoId) {
+        $userId = $request->input("userId", "");
+
+        $result = $this->todoService->delete($userId, $todoId);
+        return response()->json($result);
+    }
 }
